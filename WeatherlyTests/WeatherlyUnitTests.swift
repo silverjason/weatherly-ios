@@ -32,7 +32,7 @@ class WeatherlyTests: XCTestCase {
         
         let jsonItem = JSON(parseJSON: segmentTestItemJson)
         let dayForecast = try ForecastSegment(json: jsonItem)
-        XCTAssertEqual(dayForecast.day, "Tuesday 8:00 PM")
+        XCTAssertEqual(dayForecast.dayTime, "Tuesday 8:00 PM")
         XCTAssertEqual(dayForecast.description, "scattered clouds")
         XCTAssertEqual(dayForecast.date, "Mar 2, 2021")
         XCTAssertEqual(dayForecast.iconImageUrl?.absoluteString, "http://openweathermap.org/img/w/03n.png")

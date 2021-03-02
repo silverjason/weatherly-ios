@@ -20,8 +20,8 @@ struct ForecastSegment {
     private var dateFormatter = DateFormatter()
     
     // MARK: - Computed Properties
-    var day: String {
-        dateFormatter.dateFormat = "EEEE h:mm a"
+    var dayTime: String {
+        dateFormatter.dateFormat = "EEEE H:mm a"
         return dateFormatter.string(from: Date(timeIntervalSince1970: dateTs))
     }
     

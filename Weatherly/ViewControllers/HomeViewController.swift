@@ -109,7 +109,7 @@ class HomeViewController: UIViewController {
                                index: Int) -> ForecastCollectionViewCell {
         
         let segment = summary.segments[index]
-        cell.dayLabel?.text = segment.day
+        cell.dayLabel?.text = segment.dayTime
         cell.dateLabel?.text = segment.date
         cell.descriptionLabel?.text = segment.description
         cell.temperatureLabel?.text = "\(segment.temperature)c"
