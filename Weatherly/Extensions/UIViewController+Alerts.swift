@@ -17,5 +17,5 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         present(alert, animated: true)
     }
-    
+
 }

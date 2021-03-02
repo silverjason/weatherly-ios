@@ -27,9 +27,8 @@ class WeatherlyTests: XCTestCase {
                 """
     }
 
-    
     func testInitForecastSegmenttEmptyJSONThrows() throws {
-        
+
         let jsonItem = JSON(parseJSON: segmentTestItemJson)
         let dayForecast = try ForecastSegment(json: jsonItem)
         XCTAssertEqual(dayForecast.dayTime, "Tuesday 8:00 PM")
@@ -44,9 +43,9 @@ class WeatherlyTests: XCTestCase {
         let summary = ForecastSummary(segments: [], city: "Sydney")
         XCTAssertEqual(city, summary.city)
     }
-    
+
     func testForecastWithCityWithDayForecasts() throws {
-    
+
         let city = "Sydney"
         let jsonItem = JSON(parseJSON: segmentTestItemJson)
         let dayForecast = try ForecastSegment(json: jsonItem)

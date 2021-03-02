@@ -8,7 +8,7 @@
 enum SearchType {
     case city
     case postCode
-    
+
     var queryParam: String {
         switch self {
         case .city:

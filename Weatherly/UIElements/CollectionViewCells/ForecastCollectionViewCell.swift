@@ -11,9 +11,9 @@ class ForecastCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Static Properties
     static let identifier = "ForecastCollectionViewCellID"
-    
+
     // MARK: - IBOutlets
-    
+
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
