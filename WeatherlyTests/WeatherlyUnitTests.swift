@@ -15,15 +15,15 @@ class WeatherlyTests: XCTestCase {
         return
             """
                 {
-                        "dt": 1614675600,
-                        "main": {
-                            "temp": 292.44,
-                        },
-                        "weather": [{
-                            "description": "scattered clouds",
-                            "icon": "03n"
-                        }],
-                    }
+                    "dt": 1614675600,
+                    "main": {
+                        "temp": 292.44,
+                    },
+                    "weather": [{
+                        "description": "scattered clouds",
+                        "icon": "03n"
+                    }],
+                }
                 """
     }
 
