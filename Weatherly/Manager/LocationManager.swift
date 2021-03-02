@@ -19,12 +19,21 @@ class LocationManager: NSObject {
     }()
 
     private var locationCompletion: ((CLPlacemark?) -> Void)?
+    
+    private var locationAuthorizationStatus: CLAuthorizationStatus {
+        if #available(iOS 14.0, *) {
+            return locationManager.authorizationStatus
+        } else {
+            // Fallback on earlier versions
+            return CLLocationManager.authorizationStatus()
+        }
+    }
 
     // MARK: - functions
     static func getCurrent(completion: @escaping ((CLPlacemark?) -> Void)) {
         shared.configure()
         shared.locationCompletion = completion
-        if shared.locationManager.authorizationStatus == .notDetermined {
+        if shared.locationAuthorizationStatus == .notDetermined {
             shared.locationManager.requestWhenInUseAuthorization()
         } else {
             shared.locationManager.requestLocation()
@@ -39,8 +48,10 @@ class LocationManager: NSObject {
         locationManager.distanceFilter = kCLDistanceFilterNone
     }
 
+
 }
 
+// MARK: - CLLocationManagerDelegate
 extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -71,7 +82,7 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 
-        if locationManager.authorizationStatus != .notDetermined {
+        if locationAuthorizationStatus != .notDetermined {
             locationManager.requestLocation()
         }
     }
