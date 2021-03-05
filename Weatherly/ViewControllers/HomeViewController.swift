@@ -53,15 +53,15 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func useCurrentLocation(_ UIButton: UIButton) {
-        LocationManager.getCurrent { [weak self] (placemark) in
+        LocationManager.getCurrent { [weak self] (placemark, errorDescription) in
             if let placemark = placemark {
                 let searchText = placemark.locality ?? placemark.subLocality
                 if let searchText = searchText {
                     self?.locationTextField?.text = searchText
                     self?.searchCity(searchText)
                 }
-            } else {
-                self?.displayErrorAlert("Could not determine your location")
+            } else if let desc = errorDescription {
+                self?.displayErrorAlert(desc)
             }
         }
     }

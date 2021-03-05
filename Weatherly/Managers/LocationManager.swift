@@ -18,7 +18,7 @@ class LocationManager: NSObject {
         return manager
     }()
 
-    private var locationCompletion: ((CLPlacemark?) -> Void)?
+    private var locationCompletion: ((CLPlacemark?, String?) -> Void)?
     
     private var locationAuthorizationStatus: CLAuthorizationStatus {
         if #available(iOS 14.0, *) {
@@ -30,12 +30,15 @@ class LocationManager: NSObject {
     }
 
     // MARK: - functions
-    static func getCurrent(completion: @escaping ((CLPlacemark?) -> Void)) {
+    static func getCurrent(completion: @escaping ((CLPlacemark?, String?) -> Void)) {
         shared.configure()
         shared.locationCompletion = completion
-        if shared.locationAuthorizationStatus == .notDetermined {
+        switch shared.locationAuthorizationStatus{
+        case .notDetermined:
             shared.locationManager.requestWhenInUseAuthorization()
-        } else {
+        case .restricted, .denied:
+            completion(nil, "Please check your location permissions")
+        default:
             shared.locationManager.requestLocation()
         }
     }
@@ -65,18 +68,18 @@ extension LocationManager: CLLocationManagerDelegate {
 
                 if let error = error {
                     print("reverse geocode failed \(error.localizedDescription)")
-                    locationCompletion?(nil)
+                    locationCompletion?(nil, error.localizedDescription)
 
                 } else if let placemarks = placemarks,
                           let placemark = placemarks.first {
 
-                    locationCompletion?(placemark)
+                    locationCompletion?(placemark, nil)
                 }
             }
 
         } else {
             // No location was available.
-            self.locationCompletion?(nil)
+            locationCompletion?(nil, "Location could not be determined")
         }
     }
 
@@ -89,7 +92,7 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location failed \(error.localizedDescription)")
-        locationCompletion?(nil)
+        locationCompletion?(nil, error.localizedDescription)
     }
 
 }
