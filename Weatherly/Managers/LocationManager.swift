@@ -85,9 +85,14 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 
-        if locationAuthorizationStatus != .notDetermined {
+        if locationAuthorizationStatus == .authorizedWhenInUse {
             locationManager.requestLocation()
         }
+    }
+    
+    //MARK: - iOS 13 support
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationManagerDidChangeAuthorization(manager)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
